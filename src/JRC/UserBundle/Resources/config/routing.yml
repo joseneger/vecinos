@@ -1,3 +1,24 @@
 jrc_user_homepage:
     path:     /hello/{name}
     defaults: { _controller: JRCUserBundle:Default:index }
+    
+jrc_user_index:
+    path:       /user/index
+    defaults: { _controller: JRCUserBundle:User:index }
+    
+jrc_user_add:
+    path:       /user/add
+    defaults: { _controller: JRCUserBundle:User:add }
+    
+jrc_user_edit:
+    path:       /user/edit/{id}
+    defaults: { _controller: JRCUserBundle:User:edit }
+    
+jrc_user_view:
+    path:       /user/view/{id}
+    defaults: { _controller: JRCUserBundle:User:view }
+    
+jrc_user_delete:
+    path:       /user/delete{id}
+    defaults: { _controller: JRCUserBundle:User:delete }
+    
