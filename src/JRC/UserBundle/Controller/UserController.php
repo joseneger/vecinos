@@ -3,6 +3,7 @@
 namespace JRC\UserBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use JRC\UserBundle\Entity\User;
 use JRC\UserBundle\Form\UserType;
@@ -46,6 +47,31 @@ class UserController extends Controller
             ));
             
             return $form;
+    }
+    
+    public function createAction(Request $request)
+    {
+        $user = new User();
+        $form = $this->createCreateForm($user);
+        $form->handleRequest($request);
+        
+        if($form->isValid())
+        {
+            $password = $form->get('password')->getData();
+            
+            $encoder = $this->container->get('security.password_encoder');
+            $encoded = $encoder->encodePassword($user, $password);
+            
+            $user->setPassword($encoded);
+            
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+            
+            return $this->redirectToRoute('jrc_user_index');
+        }
+        
+        return $this->render('JRCUserBundle:User:add.html.twig', array('form' => $form->createView()));
     }
     
     
