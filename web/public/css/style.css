@@ -1,0 +1,29 @@
+
+h2 {
+    color: green;
+}
+/*
+body {
+	font-family: 'Ubuntu', sans-serif;
+}
+
+th, td {
+    padding: 7px;
+    text-align: left;
+}
+
+table {
+    background-color: whitesmoke;
+    border: solid 1px lightgray;
+    box-shadow: 6px 6px 3px slategray;
+}
+
+.eluser {
+    background-color: whitesmoke;
+	border: solid 1px lightgray;
+	margin-top: 10px;
+	margin-bottom: 20px;
+	padding: 10px;
+	box-shadow: 6px 6px 3px slategray;
+}
+*

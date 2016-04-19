@@ -4,6 +4,8 @@ namespace JRC\UserBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use JRC\UserBundle\Entity\User;
+use JRC\UserBundle\Form\UserType;
 
 class UserController extends Controller
 {
@@ -13,7 +15,7 @@ class UserController extends Controller
         
         $users = $em->getRepository('JRCUserBundle:User')->findAll();
         
-        $res = 'Lista de usuarios: <br /><br />';
+        /*$res = 'Lista de usuarios: <br /><br />';
         
         foreach($users as $user)
         {
@@ -21,7 +23,31 @@ class UserController extends Controller
         }
         
         return new Response($res);
+        */
+        
+        return $this->render('JRCUserBundle:User:index.html.twig', array('users' => $users));
     }
+    
+    
+    public function addAction()
+    {
+        $user = new User();
+        $form = $this->createCreateForm($user);
+        
+        return $this->render('JRCUserBundle:User:add.html.twig', array('form' => $form->createView()));
+    
+    }
+    
+    private function createCreateForm(User $entity)
+    {
+        $form = $this->createForm(new UserType(), $entity, array(
+                'action' => $this->generateURL('jrc_user_create'),
+                'method' => 'POST'
+            ));
+            
+            return $form;
+    }
+    
     
     public function viewAction($id)
     {
@@ -30,7 +56,9 @@ class UserController extends Controller
        $user = $repository->find($id);
        //$user = $repository->findOneById($id);
         
-        return new Response('Usuario: ' . $user->getUsername() . ' con email: ' . $user->getEmail());
+        /*return new Response('Usuario: ' . $user->getUsername() . ' con email: ' . $user->getEmail());
+        */
+        return $this->render('JRCUserBundle:User:view.html.twig', array('users' => $user));
     }
     
 }
