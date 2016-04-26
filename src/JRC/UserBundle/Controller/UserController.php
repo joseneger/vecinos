@@ -183,12 +183,47 @@ class UserController extends Controller
     {
         $repository = $this->getDoctrine()->getRepository('JRCUserBundle:User');
         
-       $user = $repository->find($id);
-       //$user = $repository->findOneById($id);
+        $user = $repository->find($id);
         
-        /*return new Response('Usuario: ' . $user->getUsername() . ' con email: ' . $user->getEmail());
-        */
-        return $this->render('JRCUserBundle:User:view.html.twig', array('users' => $user));
+        if(!$user)
+        {
+            throw $this->createNotFoundException('User not found.');
+        }
+        
+        $deleteForm = $this->createDeleteForm($user);
+        
+        return $this->render('JRCUserBundle:User:view.html.twig', array('user' => $user, 'delete_form' => $deleteForm->createView()));
     }
     
+    private function createDeleteForm($user)
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateURL('jrc_user_delete', array('id' => $user->getId())))
+            ->setMethod('DELETE')
+            ->getForm();
+    }
+    
+    public function deleteAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository('JRCUserBundle:User')->find($id);
+        
+        if(!$user)
+        {
+            throw $this->createNotFoundException('User not found.');
+        }
+        
+        $form = $this->createDeleteForm($user);
+        $form->handleRequest($request);
+        
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $em->remove($user);
+            $em->flush();
+            
+            $this->addFlash('mensaje', 'El usuario se ha eliminado.');
+            return $this->redirectToRoute('jrc_user_index');
+            
+        }
+    }
 }

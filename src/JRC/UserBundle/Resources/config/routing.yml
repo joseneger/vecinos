@@ -31,6 +31,7 @@ jrc_user_view:
 jrc_user_delete:
     path:       /user/delete{id}
     defaults: { _controller: JRCUserBundle:User:delete }
+    methods: [POST, DELETE]
     
 jrc_user_redirect_add:
     path:       /user/create

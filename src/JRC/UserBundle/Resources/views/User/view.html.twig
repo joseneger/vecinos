@@ -3,17 +3,90 @@
 {% block body %}
     {{ parent() }}
     
-    <div class="main container">
-        <div class="page-header">
-            <h2>View</h2>
-        </div>
-        
-        <p> <b>Usuario:</b> {{users.firstName}} con email {{users.email}} </p>
-        
-        <div>
-            <a href="{{ path('jrc_user_index') }}" class="btn btn-sm btn-danger btn-delete">... volver</a>
-        </div>
-    </div>
+    <div class="container well">
+	    <div class="col-md-9">
+	    <h2>{{ user.firstName }} {{ user.lastName }}</h2>
+	        <br>
+	        <dl>
+	            <dt>Usuario</dt>
+	            <dd>
+	                {{ user.username }}
+	                &nbsp;
+	            </dd>
+	            <br>
+
+	            <dt>Nombre</dt>
+	            <dd>
+	                {{ user.firstName }}
+	                &nbsp;
+	            </dd>
+	            <br>
+
+	            <dt>Apellidos</dt>
+	            <dd>
+	                {{ user.lastName }}
+	                &nbsp;
+	            </dd>
+	            <br>
+
+	            <dt>Email</dt>
+	            <dd>
+	                {{ user.email }}
+	                &nbsp;
+	            </dd>
+	            <br>
+
+	            <dt>Rol</dt>
+	            <dd>
+                	{% if user.role == 'ROLE_ADMIN' %}
+						Administrator
+					{% elseif user.role == 'ROLE_USER' %}
+						User
+                	{% endif %}
+	                &nbsp;
+	            </dd>
+	            <br>
+
+	            <dt>Activo</dt>
+	            <dd>
+                	{% if user.isActive == 1 %}
+						<span class="text-success">Habilitado</span>
+					{% elseif user.isActive == 0 %}
+						<span class="text-warning">Deshabilitado</span>
+                	{% endif %}
+	                &nbsp;
+	            </dd>
+	            <br>
+
+	            <dt>Creado</dt>
+	            <dd>
+	                {{ user.createdAt|date('d-m-Y H:i') }}
+	                &nbsp;
+	            </dd>
+	            <br>
+
+	            <dt>Actualizado</dt>
+	            <dd>
+	                {{ user.updatedAt|date('d-m-Y H:i') }}
+	                &nbsp;
+	            </dd>
+	            <br>
+	        </dl>
+	    </div>
+	    <div class="col-md-3">
+	    	<h3>Acciones</h3>
+			<p>
+		    	<a href="{{ path('jrc_user_edit', { id: user.id }) }}" class="btn btn-primary btn-lg btn-block">
+		    		<span class="glyphicon glyphicon-edit"></span>
+		        	Editar usuario
+				 </a>
+			</p>
+			<p>
+			    {{ include('JRCUserBundle:User:forms/form.html.twig', { form: delete_form, message: '¿Estás seguro?'}) }}
+			</p>
+			
+	    </div>
+	</div>
 
 {% endblock%}
 
