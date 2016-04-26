@@ -1,15 +1,19 @@
 {% extends 'layout.html.twig' %}
 
 {% block body %}
-
-<h2>View</h2>
-
-<div class="eluser"> <b>Usuario:</b> {{users.firstName}} con email {{users.email}} </div>
-
-<div>
-    <a href="{{ path('jrc_user_index') }}" class="btn btn-sm btn-danger btn-delete">...volver</a>
-</div>
-
+    {{ parent() }}
+    
+    <div class="main container">
+        <div class="page-header">
+            <h2>View</h2>
+        </div>
+        
+        <p> <b>Usuario:</b> {{users.firstName}} con email {{users.email}} </p>
+        
+        <div>
+            <a href="{{ path('jrc_user_index') }}" class="btn btn-sm btn-danger btn-delete">... volver</a>
+        </div>
+    </div>
 
 {% endblock%}
 
