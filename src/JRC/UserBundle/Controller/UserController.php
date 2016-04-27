@@ -36,7 +36,9 @@ class UserController extends Controller
             10
         );
         
-        return $this->render('JRCUserBundle:User:index.html.twig', array('pagination' => $pagination));
+        $deleteFormAjax = $this->createCustomForm(':USER_ID', 'DELETE', 'jrc_user_delete');
+        
+        return $this->render('JRCUserBundle:User:index.html.twig', array('pagination' => $pagination, 'delete_form_ajax' => $deleteFormAjax->createView()));
     }
     
     
@@ -190,18 +192,11 @@ class UserController extends Controller
             throw $this->createNotFoundException('User not found.');
         }
         
-        $deleteForm = $this->createDeleteForm($user);
+        $deleteForm = $this->createCustomForm($user->getId(), 'DELETE', 'jrc_user_delete');
         
         return $this->render('JRCUserBundle:User:view.html.twig', array('user' => $user, 'delete_form' => $deleteForm->createView()));
     }
     
-    private function createDeleteForm($user)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateURL('jrc_user_delete', array('id' => $user->getId())))
-            ->setMethod('DELETE')
-            ->getForm();
-    }
     
     public function deleteAction(Request $request, $id)
     {
@@ -213,17 +208,62 @@ class UserController extends Controller
             throw $this->createNotFoundException('User not found.');
         }
         
-        $form = $this->createDeleteForm($user);
+        $allUsers = $em->getRepository('JRCUserBundle:User')->findAll();
+        $countUsers = count($allUsers);
+        
+        // $form = $this->createDeleteForm($user);
+        $form = $this->createCustomForm($user->getId(), 'DELETE', 'jrc_user_delete');
         $form->handleRequest($request);
         
         if($form->isSubmitted() && $form->isValid())
         {
-            $em->remove($user);
-            $em->flush();
+            if($request->isXMLHttpRequest())
+            {
+                $res = $this->deleteUser($user->getRole(), $em, $user);
+                
+                return new Response(
+                    json_encode(array('removed' => $res['removed'], 'message' => $res['message'], 'countUsers' => $countUsers)),
+                    200,
+                    array('Content-Type' => 'application/json')
+                );
+                
+            }
+            // $res contiene array con 'message', 'removed' y 'alert'
+            $res = $this->deleteUser($user->getRole(), $em, $user);
             
-            $this->addFlash('mensaje', 'El usuario se ha eliminado.');
+            $this->addFlash($res['alert'], $res['message']);
             return $this->redirectToRoute('jrc_user_index');
             
         }
+    }
+    
+    private function deleteUser($role, $em, $user)
+    {
+        if($role == 'ROLE_USER')
+        {
+            $em->remove($user);
+            $em->flush();
+            
+            $message = 'El usuario ha sido eliminado';
+            $removed = 1;
+            $alert = 'mensaje';
+        }
+        elseif($role == 'ROLE_ADMIN')
+        {
+            $message = 'El usuario NO ha sido eliminado';
+            $removed = 0;
+            $alert = 'error';
+        }
+        
+        return array('removed' => $removed, 'message' => $message, 'alert' => $alert);
+    }
+    
+    
+    private function createCustomForm($id, $method, $route)
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl($route, array('id' => $id)))
+            ->setMethod($method)
+            ->getForm();
     }
 }
