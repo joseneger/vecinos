@@ -14,21 +14,19 @@ class UserController extends Controller
 {
     public function indexAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
+        $searchQuery = $request->get('query');
         
-        //$users = $em->getRepository('JRCUserBundle:User')->findAll();
-        
-        /*$res = 'Lista de usuarios: <br /><br />';
-        
-        foreach($users as $user)
+        if(!empty($searchQuery)) //busqueda de elasticSearch
         {
-            $res .= 'Usuario: ' . $user->getUsername() . ' - Email: ' . $user->getEmail() . '<br />';
+            $finder = $this->container->get('fos_elastica.finder.app.user');
+            $users = $finder->createPaginatorAdapter($searchQuery);
         }
-        
-        return new Response($res);
-        */
-        $dql = "SELECT u FROM JRCUserBundle:User u ORDER BY u.id DESC";
-        $users = $em->createQuery($dql);
+        else
+        {
+            $em = $this->getDoctrine()->getManager();
+            $dql = "SELECT u FROM JRCUserBundle:User u ORDER BY u.id DESC";
+            $users = $em->createQuery($dql);
+        }
         
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
