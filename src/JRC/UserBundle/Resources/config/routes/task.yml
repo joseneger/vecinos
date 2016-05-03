@@ -1,0 +1,44 @@
+jrc_task_index:
+    path:     /index
+    defaults: { _controller: JRCUserBundle:Task:index }
+
+jrc_task_add:
+    path:     /add
+    defaults: { _controller: JRCUserBundle:Task:add }
+
+jrc_task_create:
+    path:     /create
+    defaults: { _controller: JRCUserBundle:Task:create }
+    methods:  POST
+
+jrc_task_edit:
+    path:     /edit/{id}
+    defaults: { _controller: JRCUserBundle:Task:edit }
+
+jrc_task_update:
+    path:     /update/{id}
+    defaults: { _controller: JRCUserBundle:Task:update }
+    methods:  [POST, PUT]
+
+jrc_task_view:
+    path:     /view/{id}
+    defaults: { _controller: JRCUserBundle:Task:view }
+
+jrc_task_delete:
+    path:     /delete/{id}
+    defaults: { _controller: JRCUserBundle:Task:delete }
+    methods:  [POST, DELETE]
+
+jrc_task_redirect_add:
+    path: /create
+    defaults:
+        _controller: JRCUserBundle:Task:add
+        path: /add
+        permanent: true
+
+jrc_task_redirect_edit:
+    path: /update/{id}
+    defaults:
+        _controller: JRCUserBundle:Task:edit
+        path: /edit/{id}
+        permanent: true
