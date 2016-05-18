@@ -1,0 +1,69 @@
+{% extends 'layout.html.twig' %}
+
+{% block body %}
+    {{ parent() }}
+    <div class="main container">
+        <div class="row well">
+            <div class="col-md-6">
+                <div class="page-header">
+                    <h2>Nuevo usuario</h2>
+                </div>
+                
+                {{ form_start(form, { 'attr' : {'novalidate': 'novalidate', 'role': 'form'} }) }}
+                
+                <div class="form-group">
+                    {{ form_label(form.username, 'Usuario') }}
+                    {{ form_widget(form.username, { 'attr' : {'class' : 'form-control', 'placeholder' : 'Tu nombre de usuario' } }) }}
+                    <span class="text-danger">{{ form_errors(form.username) }}</span>
+                </div>
+                
+                <div class="form-group">
+                    {{ form_label(form.nombre, 'Nombre') }}
+                    {{ form_widget(form.nombre, { 'attr' : {'class' : 'form-control', 'placeholder' : 'Nombre' }}) }}
+                    <span class="text-danger">{{ form_errors(form.nombre) }}</span>
+                </div>
+                
+                <div class="form-group">
+                    {{ form_label(form.apellidos, 'Apellidos') }}
+                    {{ form_widget(form.apellidos, { 'attr' : {'class' : 'form-control', 'placeholder' : 'Apellido' }}) }}
+                    <span class="text-danger">{{ form_errors(form.apellidos) }}</span>
+                </div>
+                
+                <div class="form-group">
+                    {{ form_label(form.password, 'Contraseña') }}
+                    {{ form_widget(form.password, { 'attr' : {'class' : 'form-control', 'placeholder' : 'Contraseña' }}) }}
+                    <span class="text-danger">{{ form_errors(form.password) }}</span>
+                </div>
+                
+                <div class="form-group">
+                    {{ form_label(form.email) }}
+                    {{ form_widget(form.email, { 'attr' : {'class' : 'form-control', 'placeholder' : 'Tu email' }}) }}
+                    <span class="text-danger">{{ form_errors(form.email) }}</span>
+                </div>
+                
+                <div class="form-group">
+                    {{ form_label(form.telefono1) }}
+                    {{ form_widget(form.telefono1, { 'attr' : {'class' : 'form-control', 'placeholder' : 'Telefono 1' }}) }}
+                    <span class="text-danger">{{ form_errors(form.telefono1) }}</span>
+                </div>
+                
+                <div class="form-group">
+                    {{ form_label(form.telefono2) }}
+                    {{ form_widget(form.telefono2, { 'attr' : {'class' : 'form-control', 'placeholder' : 'Telefono 2' }}) }}
+                    <span class="text-danger">{{ form_errors(form.telefono2) }}</span>
+                </div>
+                
+                
+                </fieldset>
+                
+                <p>
+                    {{ form_widget(form.save, {'label' : 'Crear usuario', 'attr': {'class': 'btn btn-success'}}) }}
+                </p>
+            
+                
+                {{ form_end(form) }}
+                
+            </div>
+        </div>
+    </div>
+{% endblock %}

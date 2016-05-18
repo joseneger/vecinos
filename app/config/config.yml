@@ -114,4 +114,17 @@ fos_elastica:
                         model: JRC\UserBundle\Entity\User
                         provider: ~
                         listener: ~
-                        finder: ~              
+                        finder: ~
+                usuario:
+                    mappings:
+                        nombre: ~
+                        apellidos: ~
+                    persistence:
+                        # the driver can be orm, mongodb, phpcr or propel
+                        # listener and finder are not supported by
+                        # propel and should be removed
+                        driver: orm
+                        model: JRC\VecinosBundle\Entity\Usuario
+                        provider: ~
+                        listener: ~
+                        finder: ~

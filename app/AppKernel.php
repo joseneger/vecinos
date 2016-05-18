@@ -20,6 +20,7 @@ class AppKernel extends Kernel
             new JRC\UserBundle\JRCUserBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new FOS\ElasticaBundle\FOSElasticaBundle(),
+            new JRC\VecinosBundle\JRCVecinosBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

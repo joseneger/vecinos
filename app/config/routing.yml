@@ -1,3 +1,7 @@
+jrc_vecinos:
+    resource: "@JRCVecinosBundle/Resources/config/routing.yml"
+    prefix:   /
+
 jrc_user:
     resource: "@JRCUserBundle/Resources/config/routing.yml"
     prefix:   /

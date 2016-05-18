@@ -27,4 +27,7 @@ security:
         JRC\UserBundle\Entity\User:
             algorithm: bcrypt
             cost: 12
+        JRC\VecinosBundle\Entity\Usuario:
+            algorithm: bcrypt
+            cost: 12
                 
