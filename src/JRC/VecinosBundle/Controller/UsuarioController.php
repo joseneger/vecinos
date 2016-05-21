@@ -85,7 +85,7 @@ class UsuarioController extends Controller
                 
                 $this->addFlash('mensaje', 'El usuario se ha creado correctamente.');
                 
-                return $this->redirectToRoute('jrc_user_index');
+                return $this->redirectToRoute('jrc_usuario_index');
             }
             else{
                 $errorMessage = new FormError($errorList[0]->getMessage());
@@ -93,7 +93,7 @@ class UsuarioController extends Controller
             }
         }
         
-        return $this->render('JRCUserBundle:User:add.html.twig', array('form' => $form->createView()));
+        return $this->render('JRCVecinosBundle:Usuario:add.html.twig', array('form' => $form->createView()));
     }
     
 }
