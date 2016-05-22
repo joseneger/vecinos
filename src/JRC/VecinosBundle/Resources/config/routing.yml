@@ -1,57 +1,14 @@
+jrc_usuario_usuario:
+    resource: "@JRCVecinosBundle/Resources/config/routes/usuario.yml"
+    prefix:   /usuario
+
+jrc_task_task:
+    resource: "@JRCVecinosBundle/Resources/config/routes/comunidad.yml"
+    prefix:   /comunidad
+
+
 jrc_vecinos_homepage:
     path:     /vecinos/{name}
     defaults: { _controller: JRCVecinosBundle:Vecinos:index }
-    
-    
-jrc_usuario_index:
-    path: /usuario/index
-    defaults: { _controller: JRCVecinosBundle:Usuario:index }
 
-jrc_usuario_add:
-    path:     /usuario/add
-    defaults: { _controller: JRCVecinosBundle:Usuario:add }
-    
-jrc_usuario_create:
-    path:       /usuario/create
-    defaults: { _controller: JRCVecinosBundle:Usuario:create }
-    methods: POST
-
-jrc_usuario_edit:
-    path:     /vecinos/edit/{id}
-    defaults: { _controller: JRCVecinosBundle:Usuario:edit }
-    
-jrc_usuario_redirect_add:
-    path: /usuario/create
-    defaults:
-        _controller: JRCVecinosBundle:Usuario:add
-        path: /usuario/add
-        permanent: true
-        
-
-        
-
-
-jrc_comunidad_index:
-    path: /comunidad/index
-    defaults: { _controller: JRCVecinosBundle:Comunidad:index }
-    
-jrc_comunidad_add:
-    path:     /comunidad/add
-    defaults: { _controller: JRCVecinosBundle:Comunidad:add }
-    
-jrc_comunidad_create:
-    path:       /comunidad/create
-    defaults: { _controller: JRCVecinosBundle:Comunidad:create }
-    methods: POST
-    
-jrc_comunidad_edit:
-    path:     /vecinos/edit/{id}
-    defaults: { _controller: JRCVecinosBundle:Comunidad:edit }
-    
-jrc_comunidad_redirect_add:
-    path: /comunidad/create
-    defaults:
-        _controller: JRCVecinosBundle:Comunidad:add
-        path: /comunidad/add
-        permanent: true
 

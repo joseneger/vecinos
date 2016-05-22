@@ -1,0 +1,38 @@
+jrc_usuario_index:
+    path:   /index
+    defaults: { _controller: JRCVecinosBundle:Usuario:index }
+
+jrc_usuario_add:
+    path:   /add
+    defaults: { _controller: JRCVecinosBundle:Usuario:add }
+    
+jrc_usuario_create:
+    path:   /create
+    defaults: { _controller: JRCVecinosBundle:Usuario:create }
+    methods: POST
+
+jrc_usuario_edit:
+    path:   /edit/{id}
+    defaults: { _controller: JRCVecinosBundle:Usuario:edit }
+    
+jrc_usuario_update:
+    path:       /update/{id}
+    defaults: { _controller: JRCVecinosBundle:Usuario:update }
+    methods: [POST, PUT]
+    
+jrc_usuario_view:
+    path:       /view/{id}
+    defaults: { _controller: JRCVecinosBundle:Usuario:view }
+    
+jrc_usuario_delete:
+    path:       /delete{id}
+    defaults: { _controller: JRCVecinosBundle:Usuario:delete }
+    methods: [POST, DELETE]
+    
+jrc_usuario_redirect_add:
+    path: /create
+    defaults:
+        _controller: JRCVecinosBundle:Usuario:add
+        path: /usuario/add
+        permanent: true
+        

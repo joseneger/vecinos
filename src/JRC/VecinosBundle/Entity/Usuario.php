@@ -32,6 +32,7 @@ class Usuario implements UserInterface
      * @var string
      *
      * @ORM\Column(name="username", type="string", length=100)
+     * @Assert\NotBlank()
      */
     private $username;
 

@@ -1,0 +1,23 @@
+jrc_comunidad_index:
+    path:   /index
+    defaults: { _controller: JRCVecinosBundle:Comunidad:index }
+    
+jrc_comunidad_add:
+    path:    /add
+    defaults: { _controller: JRCVecinosBundle:Comunidad:add }
+    
+jrc_comunidad_create:
+    path:   /create
+    defaults: { _controller: JRCVecinosBundle:Comunidad:create }
+    methods: POST
+    
+jrc_comunidad_edit:
+    path:   /edit/{id}
+    defaults: { _controller: JRCVecinosBundle:Comunidad:edit }
+    
+jrc_comunidad_redirect_add:
+    path:   /create
+    defaults:
+        _controller: JRCVecinosBundle:Comunidad:add
+        path: /comunidad/add
+        permanent: true

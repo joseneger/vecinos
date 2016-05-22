@@ -1,0 +1,85 @@
+{# View de usuario #}
+
+{% extends 'layout.html.twig' %}
+
+{% block body %}
+    {{ parent() }}
+    
+    <div class="container well">
+	    <div class="col-md-9">
+	    <h2>{{ usuario.nombre }} {{ usuario.apellidos }}</h2>
+	        <br>
+	        <dl>
+	            <dt>Usuario</dt>
+	            <dd>
+	                {{ usuario.username }}
+	                &nbsp;
+	            </dd>
+	            <br>
+
+	            <dt>Nombre</dt>
+	            <dd>
+	                {{ usuario.nombre }}
+	                &nbsp;
+	            </dd>
+	            <br>
+
+	            <dt>Apellidos</dt>
+	            <dd>
+	                {{ usuario.apellidos }}
+	                &nbsp;
+	            </dd>
+	            <br>
+
+	            <dt>Email</dt>
+	            <dd>
+	                {{ usuario.email }}
+	                &nbsp;
+	            </dd>
+	            <br>
+
+	            <dt>Telefono 1</dt>
+	            <dd>
+	                {{ usuario.telefono1 }}
+	                &nbsp;
+	            </dd>
+	            <br>
+	            
+	            <dt>Telefono 2</dt>
+	            <dd>
+	                {{ usuario.telefono2 }}
+	                &nbsp;
+	            </dd>
+	            <br>
+
+	            <dt>Creado</dt>
+	            <dd>
+	                {{ usuario.createdAt|date('d-m-Y H:i') }}
+	                &nbsp;
+	            </dd>
+	            <br>
+
+	            <dt>Actualizado</dt>
+	            <dd>
+	                {{ usuario.updatedAt|date('d-m-Y H:i') }}
+	                &nbsp;
+	            </dd>
+	            <br>
+	        </dl>
+	    </div>
+	    <div class="col-md-3">
+	    	<h3>Acciones</h3>
+			<p>
+		    	<a href="{{ path('jrc_usuario_edit', { id: usuario.id }) }}" class="btn btn-primary btn-lg btn-block">
+		    		<span class="glyphicon glyphicon-edit"></span>
+		        	Editar usuario
+				 </a>
+			</p>
+			<p>
+			    {{ include('JRCVecinosBundle:Usuario:forms/form.html.twig', { form: delete_form, message: '¿Estás seguro?'}) }}
+			</p>
+			
+	    </div>
+	</div>
+
+{% endblock%}

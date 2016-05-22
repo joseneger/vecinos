@@ -1,0 +1,15 @@
+{# Caso de petición AJAX #}
+{% if flashMesssage is not defined %}
+	<div class="alert alert-danger hidden" id="message-danger" role="alert">
+		<div class="container">
+			<span id="user-message-danger"></span>
+		</div>
+	</div>
+{% endif %}
+
+{# Caso de petición desde view #}
+{% for flashMessage in app.session.flashbag.get('mensaje') %}
+	<div class="alert alert-danger" role="alert">
+		<div class="container"> {{ flashMessage }} </div>
+	</div>
+{% endfor %}

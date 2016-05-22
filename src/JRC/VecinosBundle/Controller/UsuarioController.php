@@ -96,4 +96,106 @@ class UsuarioController extends Controller
         return $this->render('JRCVecinosBundle:Usuario:add.html.twig', array('form' => $form->createView()));
     }
     
+    
+    public function editAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $usuario = $em->getRepository('JRCVecinosBundle:Usuario')->find($id);
+        
+        if(!$usuario)
+        {
+            throw $this->createNotFoundException('Usuario no encontrado.');
+        }
+        
+        $form = $this->createEditForm($usuario);
+        
+        return $this->render('JRCVecinosBundle:Usuario:edit.html.twig', array('usuario' => $usuario, 'form' => $form->createView()));
+    }
+    
+    
+    private function createEditForm(Usuario $entity)
+    {
+        $form = $this->createForm(new UsuarioType(), $entity, array(
+                'action' => $this->generateURL('jrc_usuario_update', array('id' => $entity->getId())),
+                'method' => 'PUT'
+            ));
+            
+        return $form;
+    }
+    
+    
+    public function updateAction($id, Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $usuario = $em->getRepository('JRCVecinosBundle:Usuario')->find($id);
+        
+        if(!$usuario)
+        {
+            throw $this->createNotFoundException('Usuario no encontrado.');
+        }
+        
+        $form = $this->createEditForm($usuario);
+        $form->handleRequest($request);
+        
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $password = $form->get( 'password' )->getData();
+            if(!empty($password))
+            {
+                $encoder = $this->container->get('security.password_encoder');
+                $encoded = $encoder->encodePassword($usuario, $password);
+                $usuario->setPassword($encoded);
+            }
+            else{
+                $recoverPass = $this->recoverPass($id);
+                $usuario->setPassword($recoverPass[0]['password']);
+            }
+            
+            $em->flush();
+            
+            $this->addFlash('mensaje', 'El usuario se ha modificado correctamente.');
+            return $this->redirectToRoute('jrc_usuario_edit', array('id' => $usuario->getId()));
+        }
+        return $this->render('JRCVecinosBundle:Usuario:edit.html.twig', array('usuario' => $usuario, 'form' => $form->createView()));
+    }
+    
+    
+    private function recoverPass($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->createQuery('SELECT u.password 
+            FROM JRCVecinosBundle:Usuario u
+            WHERE u.id = :id'    
+        )->setParameter('id', $id);
+        
+        $currentPass = $query->getResult();
+        
+        return $currentPass;
+    }
+    
+    
+    public function viewAction($id)
+    {
+        $repository = $this->getDoctrine()->getRepository('JRCVecinosBundle:Usuario');
+        
+        $usuario = $repository->find($id);
+        
+        if(!$usuario)
+        {
+            throw $this->createNotFoundException('Usuario no encontrado.');
+        }
+        
+        $deleteForm = $this->createCustomForm($usuario->getId(), 'DELETE', 'jrc_usuario_delete');
+        
+        return $this->render('JRCVecinosBundle:Usuario:view.html.twig', array('usuario' => $usuario, 'delete_form' => $deleteForm->createView()));
+    }
+    
+    private function createCustomForm($id, $method, $route)
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl($route, array('id' => $id)))
+            ->setMethod($method)
+            ->getForm();
+    }
+    
 }
