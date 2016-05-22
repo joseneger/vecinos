@@ -15,6 +15,20 @@ jrc_comunidad_edit:
     path:   /edit/{id}
     defaults: { _controller: JRCVecinosBundle:Comunidad:edit }
     
+jrc_comunidad_update:
+    path:       /update/{id}
+    defaults: { _controller: JRCVecinosBundle:Comunidad:update }
+    methods: [POST, PUT]
+    
+jrc_comunidad_view:
+    path:       /view/{id}
+    defaults: { _controller: JRCVecinosBundle:Comunidad:view }
+    
+jrc_comunidad_delete:
+    path:       /delete{id}
+    defaults: { _controller: JRCVecinosBundle:Comunidad:delete }
+    methods: [POST, DELETE]
+    
 jrc_comunidad_redirect_add:
     path:   /create
     defaults:

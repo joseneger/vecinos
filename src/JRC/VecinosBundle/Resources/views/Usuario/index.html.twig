@@ -89,13 +89,11 @@
 		</div>
 	</div>
 	
-	{# ¿Que hago con este archivo para el delete de ajax? 
-	{{ include('JRCUsuarioBundle:Usuario:forms/form.html.twig', { form: delete_form_ajax, message: '¿Estás seguro?', id: 'form-delete', with_submit: false}) }}
+	{{ include('JRCVecinosBundle:Usuario:forms/form.html.twig', { form: delete_form_ajax, message: '¿Estás seguro?', id: 'form-delete', with_submit: false}) }}
 	
 {% endblock %}
 
 {% block javascripts %}
 	{{ parent() }}
-	<script src="{{ asset('bundles/jrcusuario/js/delete-usuario.js') }}"></script>
-	#}
+	<script src="{{ asset('bundles/jrcvecinos/js/delete-usuario.js') }}"></script>
 {% endblock %}

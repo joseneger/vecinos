@@ -13,8 +13,8 @@
 	</div>    
 	
 	{# Migrar a mi bundle los archivos succes y danger #}
-	{{ include('JRCUserBundle:User:messages/succes.html.twig') }}
-	{{ include('JRCUserBundle:User:messages/danger.html.twig') }}
+	{{ include('JRCVecinosBundle:Usuario:messages/succes.html.twig') }}
+	{{ include('JRCVecinosBundle:Usuario:messages/danger.html.twig') }}
 	<div class="container">
 		<div class="col-md-12">
 			<div class="page-header margin-none">
@@ -60,7 +60,7 @@
                                     {% endif %}
                                 </td>
 				                <td class="actions">
-			                        <a href="#" {#{{ path('jrc_usuario_view', {id: usuario.id}) }}"#} class="btn btn-sm btn-info">
+			                        <a href="{{ path('jrc_comunidad_view', {id: comunidad.id}) }}" class="btn btn-sm btn-info">
 			                            ver
 			                        </a>
 

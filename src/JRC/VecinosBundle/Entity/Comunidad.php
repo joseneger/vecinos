@@ -3,12 +3,19 @@
 namespace JRC\VecinosBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Comunidad
  *
  * @ORM\Table(name="comunidad")
  * @ORM\Entity(repositoryClass="JRC\VecinosBundle\Entity\ComunidadRepository")
+ * @UniqueEntity("nombre")
+ * @UniqueEntity("direccion")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Comunidad
 {
@@ -25,6 +32,7 @@ class Comunidad
      * @var string
      *
      * @ORM\Column(name="nombre", type="string", length=150)
+     * @Assert\NotBlank()
      */
     private $nombre;
 
@@ -32,6 +40,7 @@ class Comunidad
      * @var string
      *
      * @ORM\Column(name="direccion", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $direccion;
 

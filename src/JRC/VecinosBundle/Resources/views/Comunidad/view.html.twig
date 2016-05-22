@@ -1,0 +1,54 @@
+{# View de Comunidad #}
+
+{% extends 'layout.html.twig' %}
+
+{% block body %}
+    {{ parent() }}
+    
+    <div class="container well">
+	    <div class="col-md-9">
+	    <h2>{{ comunidad.nombre }}</h2>
+	        <br>
+	        <dl>
+	            <dt>Comunidad</dt>
+	            <dd>
+	                {{ comunidad.nombre }}
+	                &nbsp;
+	            </dd>
+	            <br>
+
+	            <dt>Dirección</dt>
+	            <dd>
+	                {{ comunidad.direccion }}
+	                &nbsp;
+	            </dd>
+	            <br>
+
+	            <dt>Mancomunidad</dt>
+	            <dd>
+                	{% if comunidad.mancomunidad == 0 %}
+						No
+					{% elseif comunidad.mancomunidad == 1 %}
+						Si
+                	{% endif %}
+	                &nbsp;
+	            </dd>
+	            <br>
+	        </dl>
+	    </div>
+	    <div class="col-md-3">
+	    	<h3>Acciones</h3>
+			<p>
+		    	<a href="{{ path('jrc_comunidad_edit', { id: comunidad.id }) }}" class="btn btn-primary btn-lg btn-block">
+		    		<span class="glyphicon glyphicon-edit"></span>
+		        	Editar comunidad
+				 </a>
+			</p>
+			<p>
+			    {{ include('JRCVecinosBundle:Comunidad:forms/form.html.twig', { form: delete_form, message: '¿Estás seguro?'}) }}
+			</p>
+			
+	    </div>
+	</div>
+
+{% endblock%}

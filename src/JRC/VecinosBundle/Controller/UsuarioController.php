@@ -34,9 +34,9 @@ class UsuarioController extends Controller
             3
         );
         
-        /*$deleteFormAjax = $this->createCustomForm(':USER_ID', 'DELETE', 'jrc_user_delete');
-        */
-        return $this->render('JRCVecinosBundle:Usuario:index.html.twig', array('pagination' => $pagination));
+        $deleteFormAjax = $this->createCustomForm(':USER_ID', 'DELETE', 'jrc_usuario_delete');
+        
+        return $this->render('JRCVecinosBundle:Usuario:index.html.twig', array('pagination' => $pagination, 'delete_form_ajax' => $deleteFormAjax->createView()));
     }
     
     
@@ -196,6 +196,73 @@ class UsuarioController extends Controller
             ->setAction($this->generateUrl($route, array('id' => $id)))
             ->setMethod($method)
             ->getForm();
+    }
+    
+    
+    public function deleteAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $usuario = $em->getRepository('JRCVecinosBundle:Usuario')->find($id);
+        
+        if(!$usuario)
+        {
+            throw $this->createNotFoundException('Usuario no encontrado.');
+        }
+        
+        $allUsers = $em->getRepository('JRCVecinosBundle:Usuario')->findAll();
+        $countUsers = count($allUsers);
+        
+        // $form = $this->createDeleteForm($user);
+        $form = $this->createCustomForm($usuario->getId(), 'DELETE', 'jrc_usuario_delete');
+        $form->handleRequest($request);
+        
+        if($form->isSubmitted() && $form->isValid())
+        {
+            if($request->isXMLHttpRequest())
+            {
+                $res = $this->deleteUsuario($em, $usuario);
+                
+                return new Response(
+                    json_encode(array('removed' => $res['removed'], 'message' => $res['message'], 'countUsers' => $countUsers)),
+                    200,
+                    array('Content-Type' => 'application/json')
+                );
+                
+            }
+            // $res contiene array con 'message', 'removed' y 'alert'
+            $res = $this->deleteUsuario($em, $usuario);
+            
+            $this->addFlash($res['alert'], $res['message']);
+            return $this->redirectToRoute('jrc_usuario_index');
+            
+        }
+    }
+    
+    private function deleteUsuario($em, $usuario)
+    {
+        /*if($role == 'ROLE_USER')
+        {
+            $em->remove($user);
+            $em->flush();
+            
+            $message = 'El usuario ha sido eliminado';
+            $removed = 1;
+            $alert = 'mensaje';
+        }
+        elseif($role == 'ROLE_ADMIN')
+        {
+            $message = 'El usuario NO ha sido eliminado';
+            $removed = 0;
+            $alert = 'error';
+        }*/
+        $em->remove($usuario);
+        $em->flush();
+            
+        $message = 'El usuario ha sido eliminado';
+        $removed = 1;
+        $alert = 'mensaje';
+        
+        return array('removed' => $removed, 'message' => $message, 'alert' => $alert);
     }
     
 }
